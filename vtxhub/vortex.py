@@ -1,6 +1,8 @@
 from typing import Optional
 import requests
 
+from .models import Interception
+
 
 class Client:
     BASE = 'https://api.vtxhub.com/v1'
@@ -50,4 +52,9 @@ class Client:
         }
         data = self._request('post', url, data=filter_data)
         interceptions = data['data'].get('interceptions', [])
+
+        interceptions = [
+            Interception(**interception) for interception in interceptions
+        ]
+
         return interceptions
